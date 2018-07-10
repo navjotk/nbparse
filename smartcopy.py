@@ -16,13 +16,16 @@ def smart_copy(indir, outdir):
     for fullname in os.listdir(indir):
         filename, file_extension = os.path.splitext(fullname)
 
-    if file_extension == ".ipynb":
-        nbparse(indir + pathsep + fullname, outdir + pathsep + fullname, magic_comment="OKPY_SOLUTION")
-    else:
-        if os.path.isdir(indir + pathsep + fullname):
-            shutil.copytree(indir + pathsep + fullname, outdir + pathsep + fullname)
+        if filename.startswith("."):
+            continue
+        
+        if file_extension == ".ipynb":
+            nbparse(indir + pathsep + fullname, outdir + pathsep + fullname, magic_comment="OKPY_SOLUTION")
         else:
-            shutil.copyfile(indir + pathsep + fullname, outdir + pathsep + fullname)
+            if os.path.isdir(indir + pathsep + fullname):
+                shutil.copytree(indir + pathsep + fullname, outdir + pathsep + fullname)
+            else:
+                shutil.copyfile(indir + pathsep + fullname, outdir + pathsep + fullname)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Parse jupyter notebooks to remove cells programmatically')
@@ -33,6 +36,7 @@ if __name__ == "__main__":
 
     indir = args.indir[0]
     outdir = args.outdir[0]
+    print(indir, outdir)
     smart_copy(indir, outdir)
 
 
