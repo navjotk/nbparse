@@ -10,8 +10,6 @@ OUTDIR=$(ls -d */|head -n 1)
 cd ..
 mkdir nbdir
 cd nbdir
-git clone https://github.com/navjotk/nbparse
-cd nbparse
 python smartcopy.py $INDIR $OUTDIR
 cd $OUTDIR
 git add .
